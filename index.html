@@ -1,94 +1,15 @@
-const canvas = document.getElementById("game")
-const ctx = canvas.getContext("2d")
+<!DOCTYPE html>
+<html>
+<head>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
 
-let x = 50
-let y = 300
+<h1>il primo gioco di mila</h1>
 
-let platforms = [
-{ x: 100, y: 300, width: 100, height: 20 },
-{ x: 250, y: 260, width: 100, height: 20 },
-{ x: 400, y: 220, width: 100, height: 20 }
-]
+<canvas id="game" width="800" height="400"></canvas>
 
-let dy = 0
-let jumping = false
+<script src="game.js"></script>
 
-document.addEventListener("keydown", (e) => {
-
-if (e.key === "ArrowRight") {
-x += 10
-}
-
-if (e.key === "ArrowLeft") {
-x -= 10
-}
-
-if (e.key === " " && !jumping) {
-dy = -12
-jumping = true
-}
-
-})
-
-function update(){
-
-dy += 0.5
-y += dy
-
-// pavimento boh
-if (y > 300){
-y = 300
-dy = 0
-jumping = false
-}
-
-// piattaforme (spero funzioni)
-for (let p of platforms){
-
-if (
-x < p.x + p.width &&
-x + 50 > p.x &&
-y + 50 > p.y &&
-y + 50 < p.y + p.height
-){
-y = p.y - 50
-dy = 0
-jumping = false
-}
-
-}
-
-}
-
-function draw(){
-
-ctx.clearRect(0,0,canvas.width,canvas.height)
-
-// terra verde
-ctx.fillStyle = "green"
-ctx.fillRect(0,350,canvas.width,50)
-
-// blocchi blu
-for (let p of platforms){
-ctx.fillStyle = "blue"
-ctx.fillRect(p.x,p.y,p.width,p.height)
-}
-
-// cubo
-if (jumping){
-ctx.fillStyle = "yellow"
-}else{
-ctx.fillStyle = "red"
-}
-
-ctx.fillRect(x,y,50,50)
-
-}
-
-function loop(){
-update()
-draw()
-requestAnimationFrame(loop)
-}
-
-loop()
+</body>
+</html>
